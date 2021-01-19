@@ -7,18 +7,28 @@
 
 import UIKit
 import CoreLocation
-
+import CoreFoundation
 
 class DashboardViewController: UIViewController {
     @IBOutlet var altitudeLabel: UILabel!
-       
     @IBOutlet var distanceLabel: UILabel!
+    @IBOutlet var timeLabel: UILabel!
     
-    private let locationManager = CLLocationManager()
-       
+    var counter = 0.0
+    //var timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(UpdateTimer()), userInfo: nil, repeats: true)
+    var isPlaying = false
+
+    
+    let locationManager = CLLocationManager()
+    
+
+
+    
        override func viewDidLoad() {
            super.viewDidLoad()
            
+        timeLabel.text = String(counter)
+        
            locationManager.requestWhenInUseAuthorization()
            locationManager.distanceFilter = kCLDistanceFilterNone
            locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -28,19 +38,11 @@ class DashboardViewController: UIViewController {
        }
     
     
-    func totalDistance(of locations: [CLLocation]) -> CLLocationDistance {
-        var distance: CLLocationDistance = 0.0
-        var previousLocation: CLLocation?
-        
-        locations.forEach { location in
-            if let previousLocation = previousLocation {
-                distance += location.distance(from: previousLocation)
-            }
-            previousLocation = location
-        }
-        
-        return distance
-    }
+    
+func UpdateTimer() {
+    counter = counter + 0.1
+    timeLabel.text = String(format: "%.1f", counter)
+}
 }
 
 extension DashboardViewController: CLLocationManagerDelegate {
@@ -66,4 +68,3 @@ extension DashboardViewController: CLLocationManagerDelegate {
 }
     
     
-
