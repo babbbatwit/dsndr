@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Foundation
 import CoreLocation
 import CoreFoundation
 
@@ -17,7 +18,7 @@ class DashboardViewController: UIViewController {
     private let locationManager = LocationManager.shared
     private var seconds = 0
     private var timer: Timer?
-    private var distance = Measurement(value: 0, unit: UnitLength.miles)
+    private var distance = Measurement(value: 0, unit: UnitLength.meters)
     private var locationList: [CLLocation] = []
     
     var ride: Ride!
@@ -27,7 +28,7 @@ class DashboardViewController: UIViewController {
         
         seconds = 0
         //sets intial disatnce to 0 and is using miles as units
-        distance = Measurement(value: 0, unit: UnitLength.miles)
+        distance = Measurement(value: 0, unit: UnitLength.meters)
         //makes sure the location array is empty (deletes users previous ride)
         locationList.removeAll()
         //updates values on screen
@@ -49,10 +50,13 @@ class DashboardViewController: UIViewController {
     }
     
     private func updateDisplay() {
+        let formattedDistance = Formatting.distance(distance)
+        let formattedTime = Formatting.time(seconds)
         //changes distanceLabel to show current distance
-        distanceLabel.text = "Distance:  \(distance)"
+        distanceLabel.text = formattedDistance
+    
         //changes timeLabel to show current time
-        timeLabel.text = "\(seconds)"
+        timeLabel.text = formattedTime
     }
     
     private func startLocationUpdates() {
@@ -61,7 +65,7 @@ class DashboardViewController: UIViewController {
         //locationManger has a nice activity type built in. It stops location services when the user is inside or not moving to save battery life
         locationManager.activityType = .fitness
         //min distance in meters (default value) in order for the program to warrent a location update. (nice battery saver)
-        locationManager.distanceFilter = 10
+        locationManager.distanceFilter = 0
         //calls locationManger and starts to track location using apples CoreLocation library
         locationManager.startUpdatingLocation()
     }
@@ -79,7 +83,7 @@ extension DashboardViewController: CLLocationManagerDelegate {
             
             if let lastLocation = locationList.last {
                 let delta = newLocation.distance(from: lastLocation)
-                distance = distance + Measurement(value: delta, unit: UnitLength.miles)
+                distance = (distance + Measurement(value: delta, unit: UnitLength.meters))
             }
             
             locationList.append(newLocation)
