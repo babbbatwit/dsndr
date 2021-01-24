@@ -30,4 +30,15 @@ struct Formatting {
         return formatter.string(from: TimeInterval(seconds))!
     }
     
+    static func altitude(_ altitude: Double) -> String {
+        let altitudeMeasurement = Measurement(value: altitude, unit: UnitLength.feet)
+        return Formatting.altitude(altitudeMeasurement)
+    }
+    
+    static func altitude(_ altitude: Measurement<UnitLength>) -> String {
+        let formatter = MeasurementFormatter()
+        formatter.numberFormatter.maximumFractionDigits = 0
+        formatter.unitOptions = .naturalScale
+        return formatter.string(from: altitude)
+    }
 }

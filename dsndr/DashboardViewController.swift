@@ -19,6 +19,7 @@ class DashboardViewController: UIViewController {
     private var seconds = 0
     private var timer: Timer?
     private var distance = Measurement(value: 0, unit: UnitLength.meters)
+    private var altitude = Measurement(value: 0, unit: UnitLength.meters)
     private var locationList: [CLLocation] = []
     
     var ride: Ride!
@@ -52,9 +53,11 @@ class DashboardViewController: UIViewController {
     private func updateDisplay() {
         let formattedDistance = Formatting.distance(distance)
         let formattedTime = Formatting.time(seconds)
+        let formattedAltitude = Formatting.altitude(altitude)
+        
         //changes distanceLabel to show current distance
         distanceLabel.text = formattedDistance
-    
+        altitudeLabel.text = formattedAltitude
         //changes timeLabel to show current time
         timeLabel.text = formattedTime
     }
@@ -73,7 +76,7 @@ class DashboardViewController: UIViewController {
 }
 
 
-//This is a facy location updater. I did not write this myself, but I understand how it works. I was having some issues getting this to work on my own, so I turned to the saviors of any programmers career, the stack overflow people
+//A lot of this is from stack overflow. I couldn't figure out how to code this myself. Of course I did modify a lot of the code to make it specific for my needs, such as all of the altitude stuff
 extension DashboardViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -82,6 +85,7 @@ extension DashboardViewController: CLLocationManagerDelegate {
             guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
             
             if let lastLocation = locationList.last {
+                altitude = Measurement(value: lastLocation.altitude, unit: UnitLength.meters)
                 let delta = newLocation.distance(from: lastLocation)
                 distance = (distance + Measurement(value: delta, unit: UnitLength.meters))
             }
