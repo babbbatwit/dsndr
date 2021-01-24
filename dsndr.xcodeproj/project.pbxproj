@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1F2CCFA0258D86430066D8B8 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CCF9F258D86430066D8B8 /* ProfileViewController.swift */; };
 		1F2CCFA3258D86E70066D8B8 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2CCFA2258D86E70066D8B8 /* HistoryViewController.swift */; };
+		1F587D7525BDDFBB00FF8C60 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F587D7425BDDFBB00FF8C60 /* LocationManager.swift */; };
+		1F587D7A25BDE58A00FF8C60 /* dsndr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F587D7825BDE58A00FF8C60 /* dsndr.xcdatamodeld */; };
+		1F587D7D25BDE7A300FF8C60 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F587D7C25BDE7A300FF8C60 /* CoreDataStack.swift */; };
 		1FE47168258C7C8600ADF01E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE47167258C7C8600ADF01E /* AppDelegate.swift */; };
 		1FE4716A258C7C8600ADF01E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE47169258C7C8600ADF01E /* SceneDelegate.swift */; };
 		1FE4716C258C7C8600ADF01E /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE4716B258C7C8600ADF01E /* DashboardViewController.swift */; };
@@ -21,6 +24,9 @@
 /* Begin PBXFileReference section */
 		1F2CCF9F258D86430066D8B8 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = SOURCE_ROOT; };
 		1F2CCFA2258D86E70066D8B8 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		1F587D7425BDDFBB00FF8C60 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		1F587D7925BDE58A00FF8C60 /* dsndr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = dsndr.xcdatamodel; sourceTree = "<group>"; };
+		1F587D7C25BDE7A300FF8C60 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		1FE47164258C7C8600ADF01E /* dsndr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = dsndr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FE47167258C7C8600ADF01E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1FE47169258C7C8600ADF01E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -62,6 +68,9 @@
 		1FE47166258C7C8600ADF01E /* dsndr */ = {
 			isa = PBXGroup;
 			children = (
+				1F587D7C25BDE7A300FF8C60 /* CoreDataStack.swift */,
+				1F587D7825BDE58A00FF8C60 /* dsndr.xcdatamodeld */,
+				1F587D7425BDDFBB00FF8C60 /* LocationManager.swift */,
 				1F2CCF9F258D86430066D8B8 /* ProfileViewController.swift */,
 				1FE47167258C7C8600ADF01E /* AppDelegate.swift */,
 				1FE47169258C7C8600ADF01E /* SceneDelegate.swift */,
@@ -149,7 +158,10 @@
 				1FE4716C258C7C8600ADF01E /* DashboardViewController.swift in Sources */,
 				1FE47168258C7C8600ADF01E /* AppDelegate.swift in Sources */,
 				1F2CCFA0258D86430066D8B8 /* ProfileViewController.swift in Sources */,
+				1F587D7D25BDE7A300FF8C60 /* CoreDataStack.swift in Sources */,
+				1F587D7525BDDFBB00FF8C60 /* LocationManager.swift in Sources */,
 				1F2CCFA3258D86E70066D8B8 /* HistoryViewController.swift in Sources */,
+				1F587D7A25BDE58A00FF8C60 /* dsndr.xcdatamodeld in Sources */,
 				1FE4716A258C7C8600ADF01E /* SceneDelegate.swift in Sources */,
 				1FFC6A31258D8363000E4146 /* MapViewController.swift in Sources */,
 			);
@@ -353,6 +365,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		1F587D7825BDE58A00FF8C60 /* dsndr.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				1F587D7925BDE58A00FF8C60 /* dsndr.xcdatamodel */,
+			);
+			currentVersion = 1F587D7925BDE58A00FF8C60 /* dsndr.xcdatamodel */;
+			path = dsndr.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1FE4715C258C7C8600ADF01E /* Project object */;
 }

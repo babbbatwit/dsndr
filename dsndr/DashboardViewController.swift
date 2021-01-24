@@ -14,57 +14,71 @@ class DashboardViewController: UIViewController {
     @IBOutlet var distanceLabel: UILabel!
     @IBOutlet var timeLabel: UILabel!
     
-    var counter = 0.0
-    //var timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(UpdateTimer()), userInfo: nil, repeats: true)
-    var isPlaying = false
-
+    private let locationManager = LocationManager.shared
+    private var seconds = 0
+    private var timer: Timer?
+    private var distance = Measurement(value: 0, unit: UnitLength.meters)
+    private var locationList: [CLLocation] = []
     
-    let locationManager = CLLocationManager()
-    
-
-
-    
-       override func viewDidLoad() {
-           super.viewDidLoad()
-           
-        timeLabel.text = String(counter)
+    var ride: Ride!
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-           locationManager.requestWhenInUseAuthorization()
-           locationManager.distanceFilter = kCLDistanceFilterNone
-           locationManager.desiredAccuracy = kCLLocationAccuracyBest
-           locationManager.startUpdatingLocation()
-           locationManager.delegate = self
+        seconds = 0
+        distance = Measurement(value: 0, unit: UnitLength.meters)
+        locationList.removeAll()
+        updateDisplay()
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
+          self.eachSecond()
+        }
+        startLocationUpdates()
+        
+        
+        configureView()
+        
+    }
+    
+    private func configureView() {
+    }
+    
+    func eachSecond() {
+        seconds += 1
+        updateDisplay()
+    }
+    
+    private func updateDisplay() {
+        
+        distanceLabel.text = "Distance:  \(distance)"
+        timeLabel.text = "\(seconds)"
+    }
+    
+    private func startLocationUpdates() {
+        locationManager.delegate = self
+        locationManager.activityType = .fitness
+        locationManager.distanceFilter = 10
+        locationManager.startUpdatingLocation()
+    }
 
-       }
-    
-    
-    
-func UpdateTimer() {
-    counter = counter + 0.1
-    timeLabel.text = String(format: "%.1f", counter)
 }
-}
+
+
 
 extension DashboardViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let lastLocation = locations.last {
-            let altitude = lastLocation.altitude
-            altitudeLabel.text = "Altitude: \(altitude)"
-        }
-        
-        var distance: CLLocationDistance = 0.0
-        var previousLocation: CLLocation?
-        
-        locations.forEach { location in
-            if let previousLocation = previousLocation {
-                distance += location.distance(from: previousLocation)
+        for newLocation in locations {
+            let howRecent = newLocation.timestamp.timeIntervalSinceNow
+            guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
+            
+            if let lastLocation = locationList.last {
+                let delta = newLocation.distance(from: lastLocation)
+                distance = distance + Measurement(value: delta, unit: UnitLength.meters)
             }
-            previousLocation = location
+            
+            locationList.append(newLocation)
         }
-        
-        distanceLabel.text = "Distance: \(distance)"
     }
 }
-    
-    
+
+
+
