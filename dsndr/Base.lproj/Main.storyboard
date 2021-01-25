@@ -134,38 +134,6 @@
             </objects>
             <point key="canvasLocation" x="1618.840579710145" y="75.669642857142847"/>
         </scene>
-        <!--History-->
-        <scene sceneID="4Db-rK-1ZO">
-            <objects>
-                <viewController title="History" id="NXA-dm-tnN" customClass="HistoryViewController" customModule="dsndr" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="wIy-b6-Afo">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="mve-NH-rV7"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="History" image="books.vertical.fill" catalog="system" id="sGz-af-qCk"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vRL-id-9Qf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2328.985507246377" y="75.669642857142847"/>
-        </scene>
-        <!--Profile-->
-        <scene sceneID="lyi-Mm-n9F">
-            <objects>
-                <viewController title="Profile" id="z0u-b4-CJ5" customClass="ProfileViewController" customModule="dsndr" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="6mZ-vR-4M1">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="fbx-HL-FGS"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Profile" image="person.crop.circle.fill" catalog="system" id="UgJ-y3-Tum"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x7h-ko-mqj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3039.130434782609" y="75.669642857142847"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="GHV-tm-P01">
             <objects>
@@ -179,8 +147,6 @@
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="6Ah-aQ-B8Z"/>
                         <segue destination="nLY-OD-uiO" kind="relationship" relationship="viewControllers" id="bKL-m9-W0E"/>
-                        <segue destination="NXA-dm-tnN" kind="relationship" relationship="viewControllers" id="Edh-XE-pE0"/>
-                        <segue destination="z0u-b4-CJ5" kind="relationship" relationship="viewControllers" id="n1d-dy-uqP"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rTF-wa-mGk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -190,9 +156,7 @@
     </scenes>
     <resources>
         <image name="bicycle.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="books.vertical.fill" catalog="system" width="128" height="100"/>
         <image name="map.fill" catalog="system" width="128" height="110"/>
-        <image name="person.crop.circle.fill" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
