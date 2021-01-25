@@ -64,6 +64,7 @@ class DashboardViewController: UIViewController {
         locationManager.stopUpdatingLocation()
         stopTimer()
         seconds = 0
+        laps = 0
         distance = Measurement(value: 0, unit: UnitLength.meters)
         altitude = Measurement(value: 0, unit: UnitLength.meters)
         startButton.isHidden = false
