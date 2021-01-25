@@ -17,6 +17,7 @@ class DashboardViewController: UIViewController {
     @IBOutlet var stopButton: UIButton!
     @IBOutlet var pauseButton: UIButton!
     @IBOutlet var resumeButton: UIButton!
+    @IBOutlet var lapsLabel: UILabel!
     
     private let locationManager = LocationManager.shared
     private var seconds = 0
@@ -24,6 +25,7 @@ class DashboardViewController: UIViewController {
     private var distance = Measurement(value: 0, unit: UnitLength.meters)
     private var altitude = Measurement(value: 0, unit: UnitLength.meters)
     private var locationList: [CLLocation] = []
+    private var laps = 0
     private var wasPaused = false
     private var isPaused = false
     private var rideStartTimer: Timer?
@@ -98,29 +100,23 @@ class DashboardViewController: UIViewController {
         updateDisplay()
     }
     func startRide() {
-        
-        //makes sure the location array is empty (deletes users previous ride)
         wasJustStaretd = true
         locationList.removeAll()
-        //updates values on screen
         updateDisplay()
-        //assigns the timner var a Timer with the refresh inverval of 1 second
         startTimer()
         startLocationUpdates()
         rideStartTimer = Timer.scheduledTimer(withTimeInterval: 20.0, repeats: false) {_ in
             self.wasJustStaretd = false
-            print("Stinky boyo")
         }
         startButton.isHidden = true
         stopButton.isHidden = false
     }
     
-    //after timer updates adds one second to seconds
     func eachSecond() {
         seconds += 1
-        //used to update the screen with most current info
         updateDisplay()
     }
+    
     func startTimer(){
         stopTimer()
         duration = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
@@ -136,26 +132,22 @@ class DashboardViewController: UIViewController {
         let formattedTime = Formatting.time(seconds)
         let formattedAltitude = Formatting.altitude(altitude)
         
-        //changes distanceLabel to show current distance
         distanceLabel.text = ("Distance: \(formattedDistance)")
         altitudeLabel.text = ("Altitude: \(formattedAltitude)")
-        //changes timeLabel to show current time
         timeLabel.text = formattedTime
+        lapsLabel.text = "Laps: \(laps)"
     }
     
     private func startLocationUpdates() {
-        //locationManger needs a delegate before it can run. Assigned to it's self
         locationManager.delegate = self
-        //locationManger has a nice activity type built in. It stops location services when the user is inside or not moving to save battery life
         locationManager.activityType = .other
-        //calls locationManger and starts to track location using apples CoreLocation library
         locationManager.startUpdatingLocation()
     }
     func liftChecker() {
         print("Current \(currentAltitude)")
         print("Previous \(previousAltitude)")
 
-        if(currentAltitude >= previousAltitude && currentAltitude != 0 && previousAltitude != 0 && wasJustStaretd == false)
+        if(currentAltitude >= previousAltitude && currentAltitude != 0 && previousAltitude != 0 && wasJustStaretd == false )
         {
             if isAscending == false{
                 pauseTracking()
@@ -167,6 +159,7 @@ class DashboardViewController: UIViewController {
         else{
             if isAscending == true {
                 resumeTracking()
+                laps += 1
                 isAscending = false
             }
         }
@@ -182,7 +175,7 @@ extension DashboardViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print(0)
         for newLocation in locations {
-            let howRecent = newLocation.timestamp.timeIntervalSinceNow
+            //let howRecent = newLocation.timestamp.timeIntervalSinceNow
             //guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
             print(Measurement(value: newLocation.altitude, unit: UnitLength.meters).value)
 
