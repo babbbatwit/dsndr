@@ -52,6 +52,7 @@
 		1FE4715B258C7C8600ADF01E = {
 			isa = PBXGroup;
 			children = (
+				1F587D8525BDF7B700FF8C60 /* Formatting.swift */,
 				1FE47166258C7C8600ADF01E /* dsndr */,
 				1FE47165258C7C8600ADF01E /* Products */,
 			);
@@ -68,7 +69,6 @@
 		1FE47166258C7C8600ADF01E /* dsndr */ = {
 			isa = PBXGroup;
 			children = (
-				1F587D8525BDF7B700FF8C60 /* Formatting.swift */,
 				1F587D7825BDE58A00FF8C60 /* dsndr.xcdatamodeld */,
 				1F587D7425BDDFBB00FF8C60 /* LocationManager.swift */,
 				1F2CCF9F258D86430066D8B8 /* ProfileViewController.swift */,

@@ -151,7 +151,6 @@ extension DashboardViewController: CLLocationManagerDelegate {
             
             if(wasPaused == false){
                 if let lastLocation = locationList.last {
-                    altitude = Measurement(value: lastLocation.altitude, unit: UnitLength.meters)
                     let delta = newLocation.distance(from: lastLocation)
                     distance = (distance + Measurement(value: delta, unit: UnitLength.meters))
                 }
