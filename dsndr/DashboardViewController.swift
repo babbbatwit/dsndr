@@ -8,7 +8,6 @@
 import UIKit
 import Foundation
 import CoreLocation
-import CoreFoundation
 
 class DashboardViewController: UIViewController {
     @IBOutlet var altitudeLabel: UILabel!
@@ -26,10 +25,23 @@ class DashboardViewController: UIViewController {
     private var altitude = Measurement(value: 0, unit: UnitLength.meters)
     private var locationList: [CLLocation] = []
     private var wasPaused = false
+    private var isPaused = false
     
-    var ride: Ride!
+    private var currentAltitude = 0.0
+    private var previousAltitude = 0.0
+    private var currentDistance = 0.0
+    private var previousDistance = 0.0
+    private var isStopped = false
+    private var isAscending = false
+    private var pauseCheckerTimer: Timer?
+    private var timeToCheck = false
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        pauseCheckerTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) {_ in
+            self.liftChecker()
+        }
         stopButton.isHidden = true
         pauseButton.isHidden = true
         resumeButton.isHidden = true
@@ -59,31 +71,28 @@ class DashboardViewController: UIViewController {
     
     @IBAction func pausePressed(_ sender: Any) {
         pauseTracking()
-        pauseButton.isHidden = true
-        resumeButton.isHidden = false
-        startButton.isHidden = true
-        stopButton.isHidden = false
-        updateDisplay()
-        
         
     }
     @IBAction func resumePressed(_ sender: Any) {
         resumeTracking()
-        resumeButton.isHidden = true
-        pauseButton.isHidden = false
-        updateDisplay()
-        wasPaused = true
     }
     
     func pauseTracking(){
-        locationManager.stopUpdatingLocation()
         stopTimer()
+        pauseButton.isHidden = true
+        resumeButton.isHidden = false
+        startButton.isHidden = true
+        stopButton.isHidden = false
+        isPaused = true
         updateDisplay()
     }
     
     func resumeTracking(){
-        locationManager.startUpdatingLocation()
         startTimer()
+        resumeButton.isHidden = true
+        pauseButton.isHidden = false
+        isPaused = false
+        wasPaused = true
         updateDisplay()
     }
     func startRide() {
@@ -131,28 +140,70 @@ class DashboardViewController: UIViewController {
         //locationManger needs a delegate before it can run. Assigned to it's self
         locationManager.delegate = self
         //locationManger has a nice activity type built in. It stops location services when the user is inside or not moving to save battery life
-        locationManager.activityType = .fitness
-        //min distance in meters (default value) in order for the program to warrent a location update. (nice battery saver)
-        locationManager.distanceFilter = 0
+        locationManager.activityType = .other
         //calls locationManger and starts to track location using apples CoreLocation library
         locationManager.startUpdatingLocation()
     }
-    
+    func liftChecker() {
+        print("Current \(currentAltitude)")
+        print("Previous \(previousAltitude)")
+
+        if(currentAltitude >= previousAltitude && currentAltitude != 0 && previousAltitude != 0)
+        {
+            if isAscending == false{
+                pauseTracking()
+                isAscending = true
+            }
+            
+        }
+        
+        else{
+            if isAscending == true {
+                resumeTracking()
+                isAscending = false
+            }
+        }
+        timeToCheck = true
+    }
 }
 
 
-//A lot of this is from stack overflow. I couldn't figure out how to code this myself. Of course I did modify a lot of the code to make it specific for my needs, such as all of the altitude stuff
+
+
 extension DashboardViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         for newLocation in locations {
             let howRecent = newLocation.timestamp.timeIntervalSinceNow
             guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
-            
+            print(Measurement(value: newLocation.altitude, unit: UnitLength.meters).value)
+
             if(wasPaused == false){
                 if let lastLocation = locationList.last {
                     let delta = newLocation.distance(from: lastLocation)
-                    distance = (distance + Measurement(value: delta, unit: UnitLength.meters))
+                    
+                    if isPaused == false{
+                        previousDistance = distance.value
+                        previousAltitude = altitude.value
+                        distance = (distance + Measurement(value: delta, unit: UnitLength.meters))
+                        altitude = Measurement(value: newLocation.altitude, unit: UnitLength.meters)
+                        
+                        currentDistance = distance.value
+                        currentAltitude = altitude.value
+                    }
+                    else if timeToCheck == true{
+                        previousDistance = currentAltitude
+                        previousAltitude = currentAltitude
+                        let nowDistance = (distance + Measurement(value: delta, unit: UnitLength.meters))
+                        currentDistance = nowDistance.value
+                        
+                        let nowAltitude = Measurement(value: newLocation.altitude, unit: UnitLength.meters)
+                        currentAltitude = nowAltitude.value
+                        timeToCheck = false
+                    }
+                    else{
+                    }
+                    
                 }
             }
             locationList.append(newLocation)
