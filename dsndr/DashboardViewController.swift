@@ -26,6 +26,8 @@ class DashboardViewController: UIViewController {
     private var locationList: [CLLocation] = []
     private var wasPaused = false
     private var isPaused = false
+    private var rideStartTimer: Timer?
+    private var wasJustStaretd = false
     
     private var currentAltitude = 0.0
     private var previousAltitude = 0.0
@@ -98,12 +100,17 @@ class DashboardViewController: UIViewController {
     func startRide() {
         
         //makes sure the location array is empty (deletes users previous ride)
+        wasJustStaretd = true
         locationList.removeAll()
         //updates values on screen
         updateDisplay()
         //assigns the timner var a Timer with the refresh inverval of 1 second
         startTimer()
         startLocationUpdates()
+        rideStartTimer = Timer.scheduledTimer(withTimeInterval: 20.0, repeats: false) {_ in
+            self.wasJustStaretd = false
+            print("Stinky boyo")
+        }
         startButton.isHidden = true
         stopButton.isHidden = false
     }
@@ -130,8 +137,8 @@ class DashboardViewController: UIViewController {
         let formattedAltitude = Formatting.altitude(altitude)
         
         //changes distanceLabel to show current distance
-        distanceLabel.text = formattedDistance
-        altitudeLabel.text = formattedAltitude
+        distanceLabel.text = ("Distance: \(formattedDistance)")
+        altitudeLabel.text = ("Altitude: \(formattedAltitude)")
         //changes timeLabel to show current time
         timeLabel.text = formattedTime
     }
@@ -148,7 +155,7 @@ class DashboardViewController: UIViewController {
         print("Current \(currentAltitude)")
         print("Previous \(previousAltitude)")
 
-        if(currentAltitude >= previousAltitude && currentAltitude != 0 && previousAltitude != 0)
+        if(currentAltitude >= previousAltitude && currentAltitude != 0 && previousAltitude != 0 && wasJustStaretd == false)
         {
             if isAscending == false{
                 pauseTracking()
@@ -173,12 +180,14 @@ class DashboardViewController: UIViewController {
 extension DashboardViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print(0)
         for newLocation in locations {
             let howRecent = newLocation.timestamp.timeIntervalSinceNow
-            guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
+            //guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
             print(Measurement(value: newLocation.altitude, unit: UnitLength.meters).value)
 
             if(wasPaused == false){
+                print(1)
                 if let lastLocation = locationList.last {
                     let delta = newLocation.distance(from: lastLocation)
                     
