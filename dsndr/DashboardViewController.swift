@@ -162,6 +162,7 @@ class DashboardViewController: UIViewController {
             if isAscending == false{
                 pauseTracking()
                 isAscending = true
+                laps += 1
             }
             
         }
@@ -169,7 +170,6 @@ class DashboardViewController: UIViewController {
         else{
             if isAscending == true {
                 resumeTracking()
-                laps += 1
                 isAscending = false
             }
         }
@@ -191,8 +191,6 @@ class DashboardViewController: UIViewController {
     }
     
 }
-
-
 
 
 extension DashboardViewController: CLLocationManagerDelegate {
