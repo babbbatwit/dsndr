@@ -8,7 +8,6 @@
 
 import Foundation
 
-//THE PERSON WHO MADE ALL THE FORMATTER STUFF, LIKE DateComponentsFormatter(), HONESTLY NEEDS A RAISE. THIS STUFF IS SO HELPFUL
 
 struct Formatting {
     

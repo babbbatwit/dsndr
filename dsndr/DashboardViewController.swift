@@ -29,7 +29,8 @@ class DashboardViewController: UIViewController {
     private var wasPaused = false
     private var isPaused = false
     private var rideStartTimer: Timer?
-    private var wasJustStaretd = false
+    private var wasJustStaretd = true
+    private var userPaused = false
     
     private var currentAltitude = 0.0
     private var previousAltitude = 0.0
@@ -39,17 +40,22 @@ class DashboardViewController: UIViewController {
     private var isAscending = false
     private var pauseCheckerTimer: Timer?
     private var timeToCheck = false
+    private var hasUpdatedTimer: Timer?
+    private var hasUpdated = true
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         pauseCheckerTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) {_ in
             self.liftChecker()
+            self.movingChecker()
+            self.timeToCheck = true
+            
         }
         stopButton.isHidden = true
         pauseButton.isHidden = true
         resumeButton.isHidden = true
-        
+        hasUpdated = true
     }
     
     @IBAction func startPressed(_ sender: Any) {
@@ -76,10 +82,11 @@ class DashboardViewController: UIViewController {
     
     @IBAction func pausePressed(_ sender: Any) {
         pauseTracking()
-        
+        userPaused = true
     }
     @IBAction func resumePressed(_ sender: Any) {
         resumeTracking()
+        userPaused = false
     }
     
     func pauseTracking(){
@@ -88,6 +95,7 @@ class DashboardViewController: UIViewController {
         resumeButton.isHidden = false
         startButton.isHidden = true
         stopButton.isHidden = false
+        isStopped = true
         isPaused = true
         updateDisplay()
     }
@@ -98,6 +106,7 @@ class DashboardViewController: UIViewController {
         pauseButton.isHidden = false
         isPaused = false
         wasPaused = true
+        isStopped = false
         updateDisplay()
     }
     func startRide() {
@@ -141,15 +150,18 @@ class DashboardViewController: UIViewController {
     
     private func startLocationUpdates() {
         locationManager.delegate = self
-        locationManager.activityType = .other
         locationManager.startUpdatingLocation()
+        locationManager.distanceFilter = 3
+        locationManager.allowsBackgroundLocationUpdates = true
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.pausesLocationUpdatesAutomatically = true
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
     }
     func liftChecker() {
-        print("Current \(currentAltitude)")
-        print("Previous \(previousAltitude)")
+        print("Current alt \(currentAltitude)")
+        print("Previous alt \(previousAltitude)")
 
-        if(currentAltitude >= previousAltitude && currentAltitude != 0 && previousAltitude != 0 && wasJustStaretd == false )
-        {
+        if currentAltitude >= previousAltitude && currentAltitude != 0 && previousAltitude != 0 && wasJustStaretd == false  {
             if isAscending == false{
                 pauseTracking()
                 isAscending = true
@@ -164,8 +176,25 @@ class DashboardViewController: UIViewController {
                 isAscending = false
             }
         }
-        timeToCheck = true
     }
+    
+    func movingChecker() {
+        print("Current distance \(currentDistance)")
+        print("Previous distance \(previousDistance)")
+        if hasUpdated == false && wasJustStaretd == false {
+            if isStopped == false{
+                pauseTracking()
+
+            }
+        }
+        else{
+            if isStopped == true && userPaused == false {
+                resumeTracking()
+
+            }
+        }
+    }
+    
 }
 
 
@@ -175,6 +204,8 @@ extension DashboardViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print(0)
+        hasUpdated = true
+        hasUpdatedTimer?.invalidate()
         for newLocation in locations {
             //let howRecent = newLocation.timestamp.timeIntervalSinceNow
             //guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
@@ -186,22 +217,25 @@ extension DashboardViewController: CLLocationManagerDelegate {
                     let delta = newLocation.distance(from: lastLocation)
                     
                     if isPaused == false{
-                        previousDistance = distance.value
-                        previousAltitude = altitude.value
+                        previousDistance = currentDistance
+                        previousAltitude = currentAltitude
                         distance = (distance + Measurement(value: delta, unit: UnitLength.meters))
                         altitude = Measurement(value: newLocation.altitude, unit: UnitLength.meters)
                         
                         currentDistance = distance.value
                         currentAltitude = altitude.value
                     }
-                    else if timeToCheck == true{
-                        previousDistance = currentAltitude
+                    if timeToCheck == true{
+                        print("yayayayayaya")
+                        previousDistance = currentDistance
                         previousAltitude = currentAltitude
-                        let nowDistance = (distance + Measurement(value: delta, unit: UnitLength.meters))
+                        
+                        let nowDistance = (Measurement(value: currentDistance, unit: UnitLength.meters) + Measurement(value: delta, unit: UnitLength.meters))
                         currentDistance = nowDistance.value
                         
                         let nowAltitude = Measurement(value: newLocation.altitude, unit: UnitLength.meters)
                         currentAltitude = nowAltitude.value
+                        
                         timeToCheck = false
                     }
                     else{
@@ -212,6 +246,9 @@ extension DashboardViewController: CLLocationManagerDelegate {
             locationList.append(newLocation)
         }
         wasPaused = false
+        hasUpdatedTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false){_ in
+            self.hasUpdated = false
+        }
     }
 }
 

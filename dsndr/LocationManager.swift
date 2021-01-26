@@ -7,7 +7,7 @@
 
 import CoreLocation
 
-class LocationManager {
+final class LocationManager {
   static let shared = CLLocationManager()
   
   private init() { }
