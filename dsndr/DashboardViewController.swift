@@ -158,9 +158,6 @@ class DashboardViewController: UIViewController {
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
     }
     func liftChecker() {
-        print("Current alt \(currentAltitude)")
-        print("Previous alt \(previousAltitude)")
-
         if currentAltitude >= previousAltitude && currentAltitude != 0 && previousAltitude != 0 && wasJustStaretd == false  {
             if isAscending == false{
                 pauseTracking()
@@ -179,8 +176,6 @@ class DashboardViewController: UIViewController {
     }
     
     func movingChecker() {
-        print("Current distance \(currentDistance)")
-        print("Previous distance \(previousDistance)")
         if hasUpdated == false && wasJustStaretd == false {
             if isStopped == false{
                 pauseTracking()
@@ -203,16 +198,13 @@ class DashboardViewController: UIViewController {
 extension DashboardViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print(0)
         hasUpdated = true
         hasUpdatedTimer?.invalidate()
         for newLocation in locations {
             //let howRecent = newLocation.timestamp.timeIntervalSinceNow
             //guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
-            print(Measurement(value: newLocation.altitude, unit: UnitLength.meters).value)
 
             if(wasPaused == false){
-                print(1)
                 if let lastLocation = locationList.last {
                     let delta = newLocation.distance(from: lastLocation)
                     
@@ -226,7 +218,6 @@ extension DashboardViewController: CLLocationManagerDelegate {
                         currentAltitude = altitude.value
                     }
                     if timeToCheck == true{
-                        print("yayayayayaya")
                         previousDistance = currentDistance
                         previousAltitude = currentAltitude
                         
