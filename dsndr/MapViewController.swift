@@ -10,12 +10,10 @@ import MapKit
 
 class MapViewController: UIViewController {
     @IBOutlet var mapView: MKMapView!
-    
+    //all this does is show the user's pin on a map
     override func viewDidLoad() {
         super.viewDidLoad()
-        //locationManager.startUpdatingLocation()
         mapView.showsUserLocation = true
-        // Do any additional setup after loading the view.
     }
     
 
