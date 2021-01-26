@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="6wf-CD-VmG">
-    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -13,11 +13,21 @@
             <objects>
                 <viewController title="Dashboard" id="BYZ-38-t0r" customClass="DashboardViewController" customModule="dsndr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ued-lf-YX8">
+                                <rect key="frame" x="57" y="631" width="261" height="58"/>
+                                <color key="backgroundColor" systemColor="systemTealColor"/>
+                                <state key="normal" title="Pause">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="pausePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KhE-ft-hWo"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HB3-Gd-MUq">
-                                <rect key="frame" x="57" y="507" width="300" height="60"/>
+                                <rect key="frame" x="57" y="551" width="261" height="60"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <state key="normal" title="Start">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -27,7 +37,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9O-V5-Q9x">
-                                <rect key="frame" x="57" y="507" width="300" height="60"/>
+                                <rect key="frame" x="57" y="551" width="261" height="60"/>
                                 <color key="backgroundColor" systemColor="systemRedColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="0uY-mJ-XnF"/>
@@ -41,7 +51,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RF0-qN-dQJ">
-                                <rect key="frame" x="57" y="587" width="300" height="60"/>
+                                <rect key="frame" x="57" y="631" width="261" height="60"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="bm3-1r-PKX"/>
@@ -54,7 +64,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XOX-Wm-OZM">
-                                <rect key="frame" x="5" y="197" width="400" height="72"/>
+                                <rect key="frame" x="5" y="241" width="361" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="72" id="iF1-Jt-wTi"/>
                                 </constraints>
@@ -63,7 +73,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Altitude: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U50-Pt-eMU">
-                                <rect key="frame" x="6" y="325" width="400" height="72"/>
+                                <rect key="frame" x="6" y="369" width="361" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="72" id="bK3-Ly-gyZ"/>
                                 </constraints>
@@ -72,7 +82,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Laps: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XG4-WW-bb4">
-                                <rect key="frame" x="5" y="387" width="400" height="72"/>
+                                <rect key="frame" x="5" y="431" width="361" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="72" id="Gzu-lJ-y3r"/>
                                 </constraints>
@@ -81,7 +91,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gMQ-bN-hC5">
-                                <rect key="frame" x="9" y="258" width="400" height="72"/>
+                                <rect key="frame" x="9" y="302" width="361" height="72"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="72" id="lAe-Cz-630"/>
                                 </constraints>
@@ -90,18 +100,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="jd9-Q2-L8B">
-                                <rect key="frame" x="4" y="80" width="407" height="109"/>
+                                <rect key="frame" x="4" y="124" width="368" height="109"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ued-lf-YX8">
-                                <rect key="frame" x="57" y="587" width="300" height="60"/>
-                                <color key="backgroundColor" systemColor="systemTealColor"/>
-                                <state key="normal" title="Pause">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="pausePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KhE-ft-hWo"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -160,16 +160,21 @@
             <objects>
                 <viewController title="Map" id="nLY-OD-uiO" customClass="MapViewController" customModule="dsndr" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cWc-5g-La2">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="tYJ-Kp-7bW">
-                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="tYJ-Kp-7bW">
+                                <rect key="frame" x="0.0" y="44" width="375" height="768"/>
                             </mapView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kv6-kK-F6m"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="tYJ-Kp-7bW" secondAttribute="trailing" id="4b2-A7-BsT"/>
+                            <constraint firstItem="tYJ-Kp-7bW" firstAttribute="top" secondItem="kv6-kK-F6m" secondAttribute="top" id="CJr-ai-zdY"/>
+                            <constraint firstAttribute="bottom" secondItem="tYJ-Kp-7bW" secondAttribute="bottom" id="Vy2-EY-QNY"/>
+                            <constraint firstItem="tYJ-Kp-7bW" firstAttribute="leading" secondItem="kv6-kK-F6m" secondAttribute="leading" id="veu-SY-hgl"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="map.fill" catalog="system" id="qPU-C1-US1"/>
                     <connections>
