@@ -179,13 +179,13 @@ class DashboardViewController: UIViewController {
         if hasUpdated == false && wasJustStaretd == false {
             if isStopped == false{
                 pauseTracking()
-
+                
             }
         }
         else{
             if isStopped == true && userPaused == false {
                 resumeTracking()
-
+                
             }
         }
     }
@@ -201,7 +201,7 @@ extension DashboardViewController: CLLocationManagerDelegate {
         for newLocation in locations {
             //let howRecent = newLocation.timestamp.timeIntervalSinceNow
             //guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
-
+            
             if(wasPaused == false){
                 if let lastLocation = locationList.last {
                     let delta = newLocation.distance(from: lastLocation)
