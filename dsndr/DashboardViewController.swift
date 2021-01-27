@@ -42,7 +42,7 @@ class DashboardViewController: UIViewController {
     private var resumeTimer: Timer?
     //booleans and their default states on launch
     private var wasJustStaretd = true
-    private var hasUpdated = true
+    private var hasUpdated = false
     private var isStopped = false
     private var isAscending = false
     private var timeToCheck = false
@@ -52,13 +52,6 @@ class DashboardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //starts a repeating timer that calls liftChecker() and movingChecker()
-        pauseCheckerTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) {_ in
-            self.liftChecker()
-            self.movingChecker()
-            self.timeToCheck = true
-            
-        }
         //default states of ui elements
         stopButton.isHidden = true
         pauseButton.isHidden = true
@@ -86,6 +79,7 @@ class DashboardViewController: UIViewController {
         stopButton.isHidden = true
         pauseButton.isHidden = true
         resumeButton.isHidden = true
+        pauseCheckerTimer?.invalidate()
         hasUpdatedTimer?.invalidate()
         rideStartTimer?.invalidate()
         duration?.invalidate()
@@ -126,6 +120,12 @@ class DashboardViewController: UIViewController {
     }
     //This makes sure to wipe any current data. Starts a one time timer that acts as a buffer so the app doesn't automatically pause tracking when the app has just started
     func startRide() {
+        //starts a repeating timer that calls liftChecker() and movingChecker()
+        pauseCheckerTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) {_ in
+            self.liftChecker()
+            self.movingChecker()
+            self.timeToCheck = true
+        }
         wasJustStaretd = true
         locationList.removeAll()
         updateDisplay()
@@ -209,6 +209,7 @@ class DashboardViewController: UIViewController {
     }
     
     func startResumeTimer(){
+        wasJustStaretd = true
         rideStartTimer?.invalidate()
         rideStartTimer = Timer.scheduledTimer(withTimeInterval: 15.0, repeats: false) {_ in
             self.wasJustStaretd = false
@@ -233,15 +234,10 @@ extension DashboardViewController: CLLocationManagerDelegate {
                     let delta = newLocation.distance(from: lastLocation)
                     
                     if isPaused == false{
-                        previousDistance = currentDistance
-                        previousAltitude = currentAltitude
                         distance = (distance + Measurement(value: delta, unit: UnitLength.meters))
                         altitude = Measurement(value: newLocation.altitude, unit: UnitLength.meters)
-                        
-                        currentDistance = distance.value
-                        currentAltitude = altitude.value
                     }
-                    //function to see if timeToCheck, which is true every 10 seconds, is true. If so it updates the behind the scenes distance and altitude
+                    //if statement to see if timeToCheck, which is true every 10 seconds, is true. If so it updates the behind the scenes distance and altitude
                     if timeToCheck == true{
                         previousDistance = currentDistance
                         previousAltitude = currentAltitude
@@ -254,10 +250,6 @@ extension DashboardViewController: CLLocationManagerDelegate {
                         
                         timeToCheck = false
                     }
-                    else{
-                        //here for debugging
-                    }
-                    
                 }
             }
             locationList.append(newLocation)
