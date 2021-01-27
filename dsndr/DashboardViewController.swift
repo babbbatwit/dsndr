@@ -39,7 +39,7 @@ class DashboardViewController: UIViewController {
     private var pauseCheckerTimer: Timer?
     private var rideStartTimer: Timer?
     private var duration: Timer?
-    
+    private var resumeTimer: Timer?
     //booleans and their default states on launch
     private var wasJustStaretd = true
     private var hasUpdated = true
@@ -86,6 +86,10 @@ class DashboardViewController: UIViewController {
         stopButton.isHidden = true
         pauseButton.isHidden = true
         resumeButton.isHidden = true
+        hasUpdatedTimer?.invalidate()
+        rideStartTimer?.invalidate()
+        duration?.invalidate()
+        resumeTimer?.invalidate()
         updateDisplay()
     }
     //fucntion used when the pause button is pressed. Hides and reveals specific buttons
@@ -114,6 +118,7 @@ class DashboardViewController: UIViewController {
         startTimer()
         resumeButton.isHidden = true
         pauseButton.isHidden = false
+        startResumeTimer()
         isPaused = false
         wasPaused = true
         isStopped = false
@@ -126,9 +131,7 @@ class DashboardViewController: UIViewController {
         updateDisplay()
         startTimer()
         startLocationUpdates()
-        rideStartTimer = Timer.scheduledTimer(withTimeInterval: 20.0, repeats: false) {_ in
-            self.wasJustStaretd = false
-        }
+        startResumeTimer()
         startButton.isHidden = true
         stopButton.isHidden = false
     }
@@ -163,7 +166,7 @@ class DashboardViewController: UIViewController {
     private func startLocationUpdates() {
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
-        locationManager.distanceFilter = 3
+        locationManager.distanceFilter = 10
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.pausesLocationUpdatesAutomatically = true
@@ -171,7 +174,7 @@ class DashboardViewController: UIViewController {
     }
     //liftChecker is the function that checks if the user is gaining alitude instead of losing altitude. If the user is ascending then it calls pauseTracking(), sets laps to +1, and turns specfific variables to what they need to be
     func liftChecker() {
-        if currentAltitude >= previousAltitude && currentAltitude != 0 && previousAltitude != 0 && wasJustStaretd == false  {
+        if previousAltitude - currentAltitude > 5 && currentAltitude != 0 && previousAltitude != 0 && wasJustStaretd == false  {
             //this checks if isAscending hasn't been turned to false yet and if it hasn't do what it needs to do
             if isAscending == false{
                 pauseTracking()
@@ -205,6 +208,13 @@ class DashboardViewController: UIViewController {
         }
     }
     
+    func startResumeTimer(){
+        rideStartTimer?.invalidate()
+        rideStartTimer = Timer.scheduledTimer(withTimeInterval: 15.0, repeats: false) {_ in
+            self.wasJustStaretd = false
+        }
+    }
+    
 }
 
 //extension of DashboardViewController that deals with all the location updating
@@ -212,12 +222,11 @@ extension DashboardViewController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //invalitdates the timmer that is started at the bottom of this function
-        hasUpdated = true
-        hasUpdatedTimer?.invalidate()
         for newLocation in locations {
-            //these lines are commented out for debugging
-            //let howRecent = newLocation.timestamp.timeIntervalSinceNow
-            //guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
+            let howRecent = newLocation.timestamp.timeIntervalSinceNow
+            guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
+            hasUpdated = true
+            hasUpdatedTimer?.invalidate()
             //Prevents tracking a paused distance compared to currently location. Would cause inaccuracy
             if(wasPaused == false){
                 if let lastLocation = locationList.last {
