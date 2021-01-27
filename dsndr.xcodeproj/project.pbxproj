@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F196FFF25C1C85B003D68B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F196FFE25C1C85B003D68B4 /* Assets.xcassets */; };
 		1F587D7525BDDFBB00FF8C60 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F587D7425BDDFBB00FF8C60 /* LocationManager.swift */; };
 		1F587D7A25BDE58A00FF8C60 /* dsndr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F587D7825BDE58A00FF8C60 /* dsndr.xcdatamodeld */; };
 		1F587D8625BDF7B700FF8C60 /* Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F587D8525BDF7B700FF8C60 /* Formatting.swift */; };
@@ -14,12 +15,12 @@
 		1FE4716A258C7C8600ADF01E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE47169258C7C8600ADF01E /* SceneDelegate.swift */; };
 		1FE4716C258C7C8600ADF01E /* DashboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE4716B258C7C8600ADF01E /* DashboardViewController.swift */; };
 		1FE4716F258C7C8600ADF01E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FE4716D258C7C8600ADF01E /* Main.storyboard */; };
-		1FE47171258C7C8600ADF01E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FE47170258C7C8600ADF01E /* Assets.xcassets */; };
 		1FE47174258C7C8600ADF01E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FE47172258C7C8600ADF01E /* LaunchScreen.storyboard */; };
 		1FFC6A31258D8363000E4146 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFC6A30258D8363000E4146 /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F196FFE25C1C85B003D68B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../../../../.Trash/Assets.xcassets; sourceTree = "<group>"; };
 		1F587D7425BDDFBB00FF8C60 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		1F587D7925BDE58A00FF8C60 /* dsndr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = dsndr.xcdatamodel; sourceTree = "<group>"; };
 		1F587D8525BDF7B700FF8C60 /* Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatting.swift; sourceTree = "<group>"; };
@@ -28,7 +29,6 @@
 		1FE47169258C7C8600ADF01E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		1FE4716B258C7C8600ADF01E /* DashboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewController.swift; sourceTree = "<group>"; };
 		1FE4716E258C7C8600ADF01E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		1FE47170258C7C8600ADF01E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1FE47173258C7C8600ADF01E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1FE47175258C7C8600ADF01E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FFC6A30258D8363000E4146 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -72,9 +72,9 @@
 				1FE4716B258C7C8600ADF01E /* DashboardViewController.swift */,
 				1FFC6A30258D8363000E4146 /* MapViewController.swift */,
 				1FE4716D258C7C8600ADF01E /* Main.storyboard */,
-				1FE47170258C7C8600ADF01E /* Assets.xcassets */,
 				1FE47172258C7C8600ADF01E /* LaunchScreen.storyboard */,
 				1FE47175258C7C8600ADF01E /* Info.plist */,
+				1F196FFE25C1C85B003D68B4 /* Assets.xcassets */,
 			);
 			path = dsndr;
 			sourceTree = "<group>";
@@ -137,7 +137,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FE47174258C7C8600ADF01E /* LaunchScreen.storyboard in Resources */,
-				1FE47171258C7C8600ADF01E /* Assets.xcassets in Resources */,
+				1F196FFF25C1C85B003D68B4 /* Assets.xcassets in Resources */,
 				1FE4716F258C7C8600ADF01E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
