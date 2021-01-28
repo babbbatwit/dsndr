@@ -199,7 +199,7 @@ class DashboardViewController: UIViewController {
     private func startLocationUpdates() {
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
-        locationManager.distanceFilter = 2
+        locationManager.distanceFilter = 5
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.pausesLocationUpdatesAutomatically = true
