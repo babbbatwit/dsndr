@@ -27,7 +27,7 @@ class DashboardViewController: UIViewController {
     private var altitude: Measurement = Measurement(value: 0, unit: UnitLength.meters)
     private var locationList: [CLLocation] = []
     private var laps: Int = 0
-
+    
     //behind the scences doubles
     private var currentAltitude: Double = 0.0
     private var previousAltitude: Double = 0.0
@@ -96,14 +96,14 @@ class DashboardViewController: UIViewController {
         altitude = Measurement(value: 0, unit: UnitLength.meters)
         locationList = []
         laps = 0
-
+        
         //behind the scences doubles
         currentAltitude = 0.0
         previousAltitude = 0.0
         currentDistance = 0.0
         previousDistance = 0.0
         
-
+        
         //booleans and their default states on launch
         wasJustStaretd = true
         hasUpdated = false
@@ -149,10 +149,10 @@ class DashboardViewController: UIViewController {
     //This makes sure to wipe any current data. Starts a one time timer that acts as a buffer so the app doesn't automatically pause tracking when the app has just started
     func startRide() {
         //starts a repeating timer that calls liftChecker() and movingChecker()
-        pauseCheckerTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) {_ in
+        pauseCheckerTimer = Timer.scheduledTimer(withTimeInterval: 15.0, repeats: true) {_ in
+            self.timeToCheck = true
             self.liftChecker()
             self.movingChecker()
-            self.timeToCheck = true
         }
         wasJustStaretd = true
         locationList.removeAll()
@@ -199,7 +199,7 @@ class DashboardViewController: UIViewController {
     private func startLocationUpdates() {
         locationManager.delegate = self
         locationManager.startUpdatingLocation()
-        locationManager.distanceFilter = 5
+        locationManager.distanceFilter = 10
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.pausesLocationUpdatesAutomatically = true
@@ -208,7 +208,7 @@ class DashboardViewController: UIViewController {
     
     //liftChecker is the function that checks if the user is gaining alitude instead of losing altitude. If the user is ascending then it calls pauseTracking(), sets laps to +1, and turns specfific variables to what they need to be
     func liftChecker() {
-        if previousAltitude - currentAltitude > 2 && currentAltitude != 0 && previousAltitude != 0 && wasJustStaretd == false  {
+        if previousAltitude - currentAltitude > 3 && currentAltitude != 0 && previousAltitude != 0 && wasJustStaretd == false  {
             //this checks if isAscending hasn't been turned to false yet and if it hasn't do what it needs to do
             if isAscending == false{
                 pauseTracking()
@@ -228,7 +228,9 @@ class DashboardViewController: UIViewController {
     
     //checks if the locationManager() function has turned hasUpdated to false, which means the user hasn't moved with in a 10 second period. Pauses tracking.
     func movingChecker() {
-        if hasUpdated == false && wasJustStaretd == false {
+        print(currentDistance)
+        print(previousDistance)
+        if hasUpdated == false || (currentDistance - previousDistance < 3 && currentDistance != 0 && previousDistance != 0) {
             if isStopped == false{
                 pauseTracking()
                 
@@ -247,7 +249,7 @@ class DashboardViewController: UIViewController {
     func startResumeTimer(){
         wasJustStaretd = true
         rideStartTimer?.invalidate()
-        rideStartTimer = Timer.scheduledTimer(withTimeInterval: 15.0, repeats: false) {_ in
+        rideStartTimer = Timer.scheduledTimer(withTimeInterval: 20.0, repeats: false) {_ in
             self.wasJustStaretd = false
         }
     }
@@ -260,9 +262,8 @@ extension DashboardViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //invalitdates the timmer that is started at the bottom of this function
         for newLocation in locations {
-            //commented this out because I still don't 100% understand how it works
-            //let howRecent = newLocation.timestamp.timeIntervalSinceNow
-            //guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
+            let howRecent = newLocation.timestamp.timeIntervalSinceNow
+            guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
             hasUpdated = true
             hasUpdatedTimer?.invalidate()
             //Prevents tracking a paused distance compared to currently location. Would cause inaccuracy
@@ -293,7 +294,7 @@ extension DashboardViewController: CLLocationManagerDelegate {
         }
         //sets wasPaused to false, because it would have made one full run after a pause. Prevents tracking an unwanted distance. Also the timer goes off after 10 seconds and if the timer actually goes off it means this function hasn't happened within 10 seconds because at the top of this function the timer is invailidated
         wasPaused = false
-        hasUpdatedTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false){_ in
+        hasUpdatedTimer = Timer.scheduledTimer(withTimeInterval: 15.0, repeats: false){_ in
             self.hasUpdated = false
         }
     }
