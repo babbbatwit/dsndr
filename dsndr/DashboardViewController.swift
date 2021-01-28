@@ -208,7 +208,7 @@ class DashboardViewController: UIViewController {
     
     //liftChecker is the function that checks if the user is gaining alitude instead of losing altitude. If the user is ascending then it calls pauseTracking(), sets laps to +1, and turns specfific variables to what they need to be
     func liftChecker() {
-        if previousAltitude - currentAltitude > 5 && currentAltitude != 0 && previousAltitude != 0 && wasJustStaretd == false  {
+        if previousAltitude - currentAltitude > 2 && currentAltitude != 0 && previousAltitude != 0 && wasJustStaretd == false  {
             //this checks if isAscending hasn't been turned to false yet and if it hasn't do what it needs to do
             if isAscending == false{
                 pauseTracking()
@@ -219,7 +219,7 @@ class DashboardViewController: UIViewController {
         }
         //if the first if statement false that means they aren't acending so it comes to here. It then hits the imbeded if statement to see if isAscending is equal to true, and if so turn it to false because they are no longer ascending
         else{
-            if isAscending == true {
+            if isAscending == true && previousAltitude - currentAltitude > 2 {
                 resumeTracking()
                 isAscending = false
             }
@@ -260,8 +260,9 @@ extension DashboardViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //invalitdates the timmer that is started at the bottom of this function
         for newLocation in locations {
-            let howRecent = newLocation.timestamp.timeIntervalSinceNow
-            guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
+            //commented this out because I still don't 100% understand how it works
+            //let howRecent = newLocation.timestamp.timeIntervalSinceNow
+            //guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
             hasUpdated = true
             hasUpdatedTimer?.invalidate()
             //Prevents tracking a paused distance compared to currently location. Would cause inaccuracy
