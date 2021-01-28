@@ -67,7 +67,7 @@ class DashboardViewController: UIViewController {
         stopButton.isHidden = false
         resumeButton.isHidden = true
     }
-    //fucntion used when the stop button is pressed. Hides and reveals specific buttons
+    //fucntion used when the stop button is pressed. Hides and reveals specific buttons and ensures that all variables return to their default state
     @IBAction func stopPressed(_ sender: Any) {
         locationManager.stopUpdatingLocation()
         stopTimer()
@@ -84,6 +84,13 @@ class DashboardViewController: UIViewController {
         rideStartTimer?.invalidate()
         duration?.invalidate()
         resumeTimer?.invalidate()
+        hasUpdated = false
+        isStopped = false
+        isAscending = false
+        timeToCheck = false
+        wasPaused = false
+        isPaused = false
+        userPaused = false
         updateDisplay()
     }
     //fucntion used when the pause button is pressed. Hides and reveals specific buttons
