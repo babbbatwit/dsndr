@@ -8,6 +8,7 @@
 import UIKit
 import Foundation
 import CoreLocation
+import CoreData
 
 class DashboardViewController: UIViewController {
     //ui variables
@@ -52,6 +53,8 @@ class DashboardViewController: UIViewController {
     private var userPaused: Bool = false
     private var autoLift: Bool = true
     
+    private var ride: Ride?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //default states of ui elements
@@ -72,6 +75,7 @@ class DashboardViewController: UIViewController {
     
     //fucntion used when the stop button is pressed. Hides and reveals specific buttons and ensures that all variables return to their default state
     @IBAction func stopPressed(_ sender: Any) {
+        saveRun()
         locationManager.stopUpdatingLocation()
         invalidateAllTimers()
         defaultStates()
@@ -276,6 +280,25 @@ class DashboardViewController: UIViewController {
         rideStartTimer = Timer.scheduledTimer(withTimeInterval: 20.0, repeats: false) {_ in
             self.wasJustStaretd = false
         }
+    }
+    
+    private func saveRun() {
+      let newRide = Ride(context: CoreDataStack.context)
+      newRide.distance = distance.value
+      newRide.duration = Int16(seconds)
+      newRide.timestamp = Date()
+      
+      for location in locationList {
+        let locationObject = Location(context: CoreDataStack.context)
+        locationObject.timestamp = location.timestamp
+        locationObject.latitude = location.coordinate.latitude
+        locationObject.longitude = location.coordinate.longitude
+        newRide.addToLocations(locationObject)
+      }
+      
+      CoreDataStack.saveContext()
+      
+      ride = newRide
     }
     
 }
