@@ -69,6 +69,7 @@ class DashboardViewController: UIViewController {
         stopButton.isHidden = false
         resumeButton.isHidden = true
     }
+    
     //fucntion used when the stop button is pressed. Hides and reveals specific buttons and ensures that all variables return to their default state
     @IBAction func stopPressed(_ sender: Any) {
         locationManager.stopUpdatingLocation()
@@ -80,11 +81,13 @@ class DashboardViewController: UIViewController {
         resumeButton.isHidden = true
         updateDisplay()
     }
+    
     //fucntion used when the pause button is pressed. Hides and reveals specific buttons
     @IBAction func pausePressed(_ sender: Any) {
         pauseTracking()
         userPaused = true
     }
+    
     //fucntion used when the resume button is pressed. Hides and reveals specific buttons
     @IBAction func resumePressed(_ sender: Any) {
         resumeTracking()
@@ -246,6 +249,7 @@ class DashboardViewController: UIViewController {
             }
         }
     }
+    
     //checks if the locationManager() function has turned hasUpdated to false, which means the user hasn't moved with in a 10 second period. Pauses tracking.
     func movingChecker() {
         print(currentDistance)
@@ -286,6 +290,7 @@ extension DashboardViewController: CLLocationManagerDelegate {
             guard newLocation.horizontalAccuracy < 20 && abs(howRecent) < 10 else { continue }
             hasUpdated = true
             hasUpdatedTimer?.invalidate()
+            
             //Prevents tracking a paused distance compared to currently location. Would cause inaccuracy
             if(wasPaused == false){
                 if let lastLocation = locationList.last {
@@ -313,13 +318,10 @@ extension DashboardViewController: CLLocationManagerDelegate {
             locationList.append(newLocation)
         }
         //sets wasPaused to false, because it would have made one full run after a pause. Prevents tracking an unwanted distance. Also the timer goes off after 10 seconds and if the timer actually goes off it means this function hasn't happened within 10 seconds because at the top of this function the timer is invailidated
+        
         wasPaused = false
         hasUpdatedTimer = Timer.scheduledTimer(withTimeInterval: 15.0, repeats: false){_ in
             self.hasUpdated = false
         }
     }
 }
-
-
-
-
