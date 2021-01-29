@@ -102,6 +102,13 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="jd9-Q2-L8B">
                                 <rect key="frame" x="4" y="124" width="383" height="139"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Rm-Wf-Sg0">
+                                <rect key="frame" x="16" y="44" width="110" height="30"/>
+                                <state key="normal" title="Disable auto-lift"/>
+                                <connections>
+                                    <action selector="autoLiftTogglePressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Afq-C0-Cez"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -117,6 +124,7 @@
                             <constraint firstItem="U50-Pt-eMU" firstAttribute="top" secondItem="XOX-Wm-OZM" secondAttribute="bottom" constant="56" id="Cex-uS-d9Y"/>
                             <constraint firstItem="XOX-Wm-OZM" firstAttribute="top" secondItem="jd9-Q2-L8B" secondAttribute="bottom" constant="8" id="FXv-ey-Oy4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="U50-Pt-eMU" secondAttribute="trailing" constant="8" id="Flb-KU-Mxm"/>
+                            <constraint firstItem="1Rm-Wf-Sg0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="HZV-XE-OOJ"/>
                             <constraint firstItem="Ued-lf-YX8" firstAttribute="baseline" secondItem="RF0-qN-dQJ" secondAttribute="firstBaseline" id="M5C-n0-WpI"/>
                             <constraint firstItem="b9O-V5-Q9x" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="HB3-Gd-MUq" secondAttribute="leading" id="NjF-hm-gGt"/>
                             <constraint firstItem="RF0-qN-dQJ" firstAttribute="leading" secondItem="Ued-lf-YX8" secondAttribute="leading" id="SRm-aI-Dpn"/>
@@ -132,8 +140,10 @@
                             <constraint firstItem="jd9-Q2-L8B" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="80" id="cZy-3M-FES"/>
                             <constraint firstItem="HB3-Gd-MUq" firstAttribute="top" secondItem="b9O-V5-Q9x" secondAttribute="top" id="eEB-cy-AQh"/>
                             <constraint firstItem="XOX-Wm-OZM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="fVt-Eh-CSZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1Rm-Wf-Sg0" secondAttribute="trailing" symbolic="YES" id="gFe-z6-CPn"/>
                             <constraint firstItem="U50-Pt-eMU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="6" id="j12-kx-UMZ"/>
                             <constraint firstItem="HB3-Gd-MUq" firstAttribute="bottom" secondItem="b9O-V5-Q9x" secondAttribute="bottom" id="lMz-ti-N0D"/>
+                            <constraint firstItem="1Rm-Wf-Sg0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="qSP-e5-LF4"/>
                             <constraint firstItem="RF0-qN-dQJ" firstAttribute="top" secondItem="Ued-lf-YX8" secondAttribute="top" id="tvJ-fW-etE"/>
                             <constraint firstItem="b9O-V5-Q9x" firstAttribute="trailing" secondItem="Ued-lf-YX8" secondAttribute="trailing" id="xwn-vZ-sUg"/>
                             <constraint firstItem="Ued-lf-YX8" firstAttribute="top" secondItem="HB3-Gd-MUq" secondAttribute="bottom" constant="20" id="zYR-61-gzv"/>
@@ -142,6 +152,7 @@
                     <tabBarItem key="tabBarItem" title="Dashboard" image="bicycle.circle.fill" catalog="system" id="VIh-I9-Xtz"/>
                     <connections>
                         <outlet property="altitudeLabel" destination="U50-Pt-eMU" id="2go-Fj-3JD"/>
+                        <outlet property="autoLiftToggleButton" destination="1Rm-Wf-Sg0" id="4ee-h4-aFe"/>
                         <outlet property="distanceLabel" destination="gMQ-bN-hC5" id="PSE-Mh-lVb"/>
                         <outlet property="lapsLabel" destination="XG4-WW-bb4" id="4bI-1N-ogc"/>
                         <outlet property="pauseButton" destination="Ued-lf-YX8" id="xTU-dJ-CnN"/>

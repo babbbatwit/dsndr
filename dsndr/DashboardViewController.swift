@@ -19,6 +19,7 @@ class DashboardViewController: UIViewController {
     @IBOutlet var pauseButton: UIButton!
     @IBOutlet var resumeButton: UIButton!
     @IBOutlet var lapsLabel: UILabel!
+    @IBOutlet var autoLiftToggleButton: UIButton!
     
     //location variables and variables that will be displayed
     private let locationManager = LocationManager.shared
@@ -49,6 +50,7 @@ class DashboardViewController: UIViewController {
     private var wasPaused: Bool = false
     private var isPaused: Bool = false
     private var userPaused: Bool = false
+    private var autoLift: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,6 +90,21 @@ class DashboardViewController: UIViewController {
         resumeTracking()
         userPaused = false
     }
+    
+    @IBAction func autoLiftTogglePressed(_ sender: Any) {
+        if autoLift == true {
+            autoLiftToggleButton.setTitle("Enable auto-lift", for: .normal)
+            autoLift = false
+            lapsLabel.text = "Laps: Disabled"
+        }
+        else{
+            autoLiftToggleButton.setTitle("Disable auto-lift", for: .normal)
+            autoLift = true
+            lapsLabel.text = "Laps: \(laps)"
+        }
+    }
+    
+    
     
     //resets all variables to their default states
     func defaultStates(){
@@ -192,7 +209,9 @@ class DashboardViewController: UIViewController {
         distanceLabel.text = ("Distance: \(formattedDistance)")
         altitudeLabel.text = ("Altitude: \(formattedAltitude)")
         timeLabel.text = formattedTime
-        lapsLabel.text = "Laps: \(laps)"
+        if autoLift == true {
+            lapsLabel.text = "Laps: \(laps)"
+        }
     }
     
     //Sets locactionMangagers prefrences. This provides accuracy for the app. Specifically for bug testing right now
@@ -208,24 +227,25 @@ class DashboardViewController: UIViewController {
     
     //liftChecker is the function that checks if the user is gaining alitude instead of losing altitude. If the user is ascending then it calls pauseTracking(), sets laps to +1, and turns specfific variables to what they need to be
     func liftChecker() {
-        if previousAltitude - currentAltitude > 3 && currentAltitude != 0 && previousAltitude != 0 && wasJustStaretd == false  {
-            //this checks if isAscending hasn't been turned to false yet and if it hasn't do what it needs to do
-            if isAscending == false{
-                pauseTracking()
-                isAscending = true
-                laps += 1
+        if  autoLift == true{
+            if previousAltitude - currentAltitude > 3 && currentAltitude != 0 && previousAltitude != 0 && wasJustStaretd == false  {
+                //this checks if isAscending hasn't been turned to false yet and if it hasn't do what it needs to do
+                if isAscending == false{
+                    pauseTracking()
+                    isAscending = true
+                    laps += 1
+                }
+                
             }
-            
-        }
-        //if the first if statement false that means they aren't acending so it comes to here. It then hits the imbeded if statement to see if isAscending is equal to true, and if so turn it to false because they are no longer ascending
-        else{
-            if isAscending == true && previousAltitude - currentAltitude > 2 {
-                resumeTracking()
-                isAscending = false
+            //if the first if statement false that means they aren't acending so it comes to here. It then hits the imbeded if statement to see if isAscending is equal to true, and if so turn it to false because they are no longer ascending
+            else{
+                if isAscending == true && previousAltitude - currentAltitude > 2 {
+                    resumeTracking()
+                    isAscending = false
+                }
             }
         }
     }
-    
     //checks if the locationManager() function has turned hasUpdated to false, which means the user hasn't moved with in a 10 second period. Pauses tracking.
     func movingChecker() {
         print(currentDistance)
@@ -299,6 +319,7 @@ extension DashboardViewController: CLLocationManagerDelegate {
         }
     }
 }
+
 
 
 
