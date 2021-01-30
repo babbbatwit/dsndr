@@ -15,10 +15,8 @@ class DashboardViewController: UIViewController {
     @IBOutlet var altitudeLabel: UILabel!
     @IBOutlet var distanceLabel: UILabel!
     @IBOutlet var timeLabel: UILabel!
-    @IBOutlet var startButton: UIButton!
-    @IBOutlet var stopButton: UIButton!
-    @IBOutlet var pauseButton: UIButton!
-    @IBOutlet var resumeButton: UIButton!
+    @IBOutlet var startStopButton: UIButton!
+    @IBOutlet var pauseResumeButton: UIButton!
     @IBOutlet var lapsLabel: UILabel!
     @IBOutlet var autoLiftToggleButton: UIButton!
     
@@ -58,45 +56,51 @@ class DashboardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //default states of ui elements
-        stopButton.isHidden = true
-        pauseButton.isHidden = true
-        resumeButton.isHidden = true
+        pauseResumeButton.isHidden = true
         hasUpdated = true
     }
     
     //fucntion used when the start button is pressed. Hides and reveals specific buttons
-    @IBAction func startPressed(_ sender: Any) {
-        startRide()
-        startButton.isHidden = true
-        pauseButton.isHidden = false
-        stopButton.isHidden = false
-        resumeButton.isHidden = true
+    @IBAction func startStopPressed(_ sender: Any) {
+        if startStopButton.currentTitle == "Start"{
+            startRide()
+            startStopButton.setTitle("Stop", for: .normal)
+            startStopButton.backgroundColor = UIColor.systemRed
+            pauseResumeButton.isHidden = false
+        }
+        else{
+            saveRun()
+            locationManager.stopUpdatingLocation()
+            invalidateAllTimers()
+            defaultStates()
+            startStopButton.setTitle("Start", for: .normal)
+            startStopButton.backgroundColor = UIColor.systemGreen
+            pauseResumeButton.isHidden = true
+            pauseResumeButton.setTitle("Pause", for: .normal)
+            pauseResumeButton.backgroundColor = UIColor.systemOrange
+            updateDisplay()
+        }
+        
     }
     
-    //fucntion used when the stop button is pressed. Hides and reveals specific buttons and ensures that all variables return to their default state
-    @IBAction func stopPressed(_ sender: Any) {
-        saveRun()
-        locationManager.stopUpdatingLocation()
-        invalidateAllTimers()
-        defaultStates()
-        startButton.isHidden = false
-        stopButton.isHidden = true
-        pauseButton.isHidden = true
-        resumeButton.isHidden = true
-        updateDisplay()
-    }
     
     //fucntion used when the pause button is pressed. Hides and reveals specific buttons
-    @IBAction func pausePressed(_ sender: Any) {
-        pauseTracking()
-        userPaused = true
+    @IBAction func pauseResumePressed(_ sender: Any) {
+        if pauseResumeButton.currentTitle == "Pause" {
+            pauseTracking()
+            userPaused = true
+            pauseResumeButton.setTitle("Resume", for: .normal)
+            pauseResumeButton.backgroundColor = UIColor.systemGreen
+        }
+        else{
+            resumeTracking()
+            userPaused = false
+            pauseResumeButton.setTitle("Pause", for: .normal)
+            pauseResumeButton.backgroundColor = UIColor.systemOrange
+        }
+
     }
     
-    //fucntion used when the resume button is pressed. Hides and reveals specific buttons
-    @IBAction func resumePressed(_ sender: Any) {
-        resumeTracking()
-        userPaused = false
-    }
     
     @IBAction func autoLiftTogglePressed(_ sender: Any) {
         if autoLift == true {
@@ -149,10 +153,6 @@ class DashboardViewController: UIViewController {
     //Fucntion used when app needs to pause tracking. Specifically does not stop location services, but stops timer. Turns on variables that are then used later to pause to collection of total distance
     func pauseTracking(){
         stopTimer()
-        pauseButton.isHidden = true
-        resumeButton.isHidden = false
-        startButton.isHidden = true
-        stopButton.isHidden = false
         isStopped = true
         isPaused = true
         updateDisplay()
@@ -161,8 +161,6 @@ class DashboardViewController: UIViewController {
     //Resumes tracking the users distance and adding that to the total amount of distance. Turns need booleans to on or off depending on what they are asking
     func resumeTracking(){
         startTimer()
-        resumeButton.isHidden = true
-        pauseButton.isHidden = false
         startResumeTimer()
         isPaused = false
         wasPaused = true
@@ -184,8 +182,6 @@ class DashboardViewController: UIViewController {
         startTimer()
         startLocationUpdates()
         startResumeTimer()
-        startButton.isHidden = true
-        stopButton.isHidden = false
     }
     
     //The duration timer calls this every second. Just adds one to seconds which is then displayed in the format of 00:00:00 to the user
