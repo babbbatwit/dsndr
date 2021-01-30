@@ -131,7 +131,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="926.15384615384608" y="74.644549763033169"/>
+            <point key="canvasLocation" x="831" y="-336"/>
         </scene>
         <!--Map-->
         <scene sceneID="KQM-Vp-I2x">
@@ -161,7 +161,37 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iin-ER-Raz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1618.840579710145" y="75.669642857142847"/>
+            <point key="canvasLocation" x="734" y="808"/>
+        </scene>
+        <!--Descents-->
+        <scene sceneID="uLo-Xk-vgP">
+            <objects>
+                <tableViewController id="T55-xh-k4v" customClass="DescentsViewController" customModule="dsndr" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="EVw-Rh-1ws">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="sOg-y9-Dkh">
+                                <rect key="frame" x="0.0" y="28" width="390" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="sOg-y9-Dkh" id="8lq-lh-8X1">
+                                    <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="T55-xh-k4v" id="3Wr-oF-EGB"/>
+                            <outlet property="delegate" destination="T55-xh-k4v" id="lOl-pm-J2i"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Descents" image="newspaper.fill" catalog="system" selectedImage="newspaper.fill" id="pjU-BK-dX8"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WgS-LH-oTj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1723" y="75"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="GHV-tm-P01">
@@ -176,6 +206,7 @@
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="6Ah-aQ-B8Z"/>
                         <segue destination="nLY-OD-uiO" kind="relationship" relationship="viewControllers" id="bKL-m9-W0E"/>
+                        <segue destination="T55-xh-k4v" kind="relationship" relationship="viewControllers" id="QtW-J4-dRR"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rTF-wa-mGk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -187,6 +218,7 @@
         <image name="bicycle.circle.fill" catalog="system" width="128" height="121"/>
         <image name="logo" width="168" height="109.59999847412109"/>
         <image name="map.fill" catalog="system" width="128" height="110"/>
+        <image name="newspaper.fill" catalog="system" width="128" height="111"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -69,7 +69,7 @@ class DashboardViewController: UIViewController {
             pauseResumeButton.isHidden = false
         }
         else{
-            saveRun()
+            saveRide()
             locationManager.stopUpdatingLocation()
             invalidateAllTimers()
             defaultStates()
@@ -279,7 +279,7 @@ class DashboardViewController: UIViewController {
     }
     
     //Saves current run data by using apples built in core data
-    private func saveRun() {
+    private func saveRide() {
       let newRide = Ride(context: CoreDataStack.context)
       newRide.distance = distance.value
       newRide.duration = Int16(seconds)
