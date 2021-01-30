@@ -278,19 +278,12 @@ class DashboardViewController: UIViewController {
         }
     }
     
+    //Saves current run data by using apples built in core data
     private func saveRun() {
       let newRide = Ride(context: CoreDataStack.context)
       newRide.distance = distance.value
       newRide.duration = Int16(seconds)
       newRide.timestamp = Date()
-      
-      for location in locationList {
-        let locationObject = Location(context: CoreDataStack.context)
-        locationObject.timestamp = location.timestamp
-        locationObject.latitude = location.coordinate.latitude
-        locationObject.longitude = location.coordinate.longitude
-        newRide.addToLocations(locationObject)
-      }
       
       CoreDataStack.saveContext()
       
