@@ -133,7 +133,7 @@
             </objects>
             <point key="canvasLocation" x="831" y="-336"/>
         </scene>
-        <!--View Controller-->
+        <!--Descents-->
         <scene sceneID="a7h-bE-Bnr">
             <objects>
                 <viewController id="Sev-11-DH3" sceneMemberID="viewController">
@@ -151,6 +151,19 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="z6D-6h-s8V" id="SiQ-6S-Qqb">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="82K-NO-yHd">
+                                                    <rect key="frame" x="0.0" y="0.0" width="390" height="20.333333333333332"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="82K-NO-yHd" firstAttribute="leading" secondItem="SiQ-6S-Qqb" secondAttribute="leading" id="YrJ-El-bVm"/>
+                                                <constraint firstItem="82K-NO-yHd" firstAttribute="top" secondItem="SiQ-6S-Qqb" secondAttribute="top" id="nTF-Nd-68T"/>
+                                                <constraint firstItem="82K-NO-yHd" firstAttribute="centerX" secondItem="SiQ-6S-Qqb" secondAttribute="centerX" id="xjT-Ad-BSP"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
@@ -165,7 +178,7 @@
                             <constraint firstItem="fdc-nX-Rc8" firstAttribute="bottom" secondItem="Xxj-bM-vMy" secondAttribute="bottom" id="mMQ-am-LwP"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="wMK-5J-1Tq"/>
+                    <navigationItem key="navigationItem" title="Descents" id="wMK-5J-1Tq"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yPo-cQ-tzt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
