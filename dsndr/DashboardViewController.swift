@@ -257,6 +257,8 @@ class DashboardViewController: UIViewController {
         if hasUpdated == false || (currentDistance - previousDistance < 3 && currentDistance != 0 && previousDistance != 0) {
             if isStopped == false{
                 pauseTracking()
+                pauseResumeButton.setTitle("Resume", for: .normal)
+                pauseResumeButton.backgroundColor = UIColor.systemGreen
                 
             }
         }
