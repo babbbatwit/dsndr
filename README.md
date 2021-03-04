@@ -1,7 +1,6 @@
 # dsndr
-This app was developed with for iPhone X and above in mind, and for iOS 14.3.
+Go down, keep up! Dsndr is an app for all your downhill sports needs.
 
-Dsndr is an app for all your downhill sports needs. Go down, keep up!
 
 Features:
 
@@ -14,3 +13,5 @@ Features:
 -Auto-lift detection
 
 -Total time riding
+
+(This app was developed with for iPhone X and above in mind, and for iOS 14.3)
