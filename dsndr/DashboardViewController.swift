@@ -266,7 +266,8 @@ class DashboardViewController: UIViewController {
             //If the first if statement fails it means they are moving. If the user manual paused the app it won't auto kick in. This is a key element of use cases. You wouldn't want the app overiding your personal pause
             if isStopped == true && userPaused == false {
                 resumeTracking()
-                
+                pauseResumeButton.setTitle("Pause", for: .normal)
+                pauseResumeButton.backgroundColor = UIColor.systemOrange
             }
         }
     }
