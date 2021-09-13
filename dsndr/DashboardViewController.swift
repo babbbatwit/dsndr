@@ -171,7 +171,7 @@ class DashboardViewController: UIViewController {
     //This makes sure to wipe any current data. Starts a one time timer that acts as a buffer so the app doesn't automatically pause tracking when the app has just started
     func startRide() {
         //starts a repeating timer that calls liftChecker() and movingChecker()
-        pauseCheckerTimer = Timer.scheduledTimer(withTimeInterval: 15.0, repeats: true) {_ in
+        pauseCheckerTimer = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: true) {_ in
             self.timeToCheck = true
             self.liftChecker()
             self.movingChecker()
@@ -276,7 +276,7 @@ class DashboardViewController: UIViewController {
     func startResumeTimer(){
         wasJustStaretd = true
         rideStartTimer?.invalidate()
-        rideStartTimer = Timer.scheduledTimer(withTimeInterval: 20.0, repeats: false) {_ in
+        rideStartTimer = Timer.scheduledTimer(withTimeInterval: 15.0, repeats: false) {_ in
             self.wasJustStaretd = false
         }
     }
