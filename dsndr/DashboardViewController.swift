@@ -332,7 +332,7 @@ extension DashboardViewController: CLLocationManagerDelegate {
             }
             locationList.append(newLocation)
         }
-        //sets wasPaused to false, because it would have made one full run after a pause. Prevents tracking an unwanted distance. Also the timer goes off after 10 seconds and if the timer actually goes off it means this function hasn't happened within 10 seconds because at the top of this function the timer is invailidated
+        //sets wasPaused to false, because it would have made one full run after a pause. Prevents tracking an unwanted distance. Also the timer goes off after 15 seconds and if the timer actually goes off it means this function hasn't happened within 15 seconds because at the top of this function the timer is invailidated
         
         wasPaused = false
         hasUpdatedTimer = Timer.scheduledTimer(withTimeInterval: 15.0, repeats: false){_ in
